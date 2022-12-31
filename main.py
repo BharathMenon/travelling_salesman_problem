@@ -4,7 +4,7 @@ from stage_2 import travelling_salesman_problem
 
 from stage_3 import draw_animation_background, draw_salesman
 import pygame
-from math import atan, sin, cos
+from math import atan, sin, cos, pi
 
 
 def sign(n):
@@ -50,7 +50,8 @@ while True:
 
         # arrange cities by order of indices
         cities = list(map(lambda x: cities[x], order_of_indices))
-
+        print(cities)
+        
         # initialize positions
         position = list(cities[0])
         from_position, to_position = cities[:2]
@@ -58,8 +59,15 @@ while True:
 
         # values for velocity
         delta_x = to_position[0] - from_position[0]
-        delta_y = to_position[1] - from_position[1]
-        angle = -(atan((delta_x) / (delta_y)))
+        delta_y = (to_position[1] - from_position[1])
+        if delta_x == 0:
+            angle = 0
+        elif delta_y == 0:
+            angle = pi
+        else:
+            angle = (atan((delta_y) / (delta_x)))
+        print(sign(delta_x), sign(delta_y))
+        print(angle)
 
     elif stage == 3:
         if draw_animation_background(screen, cities, scales) == -1:
@@ -73,16 +81,18 @@ while True:
             position = list(to_position)
             from_position, to_position = to_position, cities[to_index]
             delta_x = to_position[0] - from_position[0]
-            delta_y = to_position[1] - from_position[1]
-            angle = -(atan((delta_x) / (delta_y)))
+            delta_y = (to_position[1] - from_position[1])
+            print(sign(delta_x), sign(delta_y))
+            if delta_x == 0:
+                angle = 0
+            else:
+                angle = (atan((delta_y) / (delta_x)))
             print(angle)
 
         draw_salesman(screen, position)
 
-        position[0] -= sign(delta_y) * 4 * sin(angle) * scales[(from_position,
-                                                                to_position)]
-        position[1] += sign(delta_y) * 4 * cos(angle) * scales[(from_position,
-                                                                to_position)]
+        position[0] += 4 * sign(delta_x) * cos(angle) * scales[(from_position, to_position)]
+        position[1] += 4 * sign(delta_x) * sin(angle) * scales[(from_position, to_position)]
 
     else:
         # for is the last stage, just like cancer

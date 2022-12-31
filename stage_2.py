@@ -18,7 +18,6 @@ def travelling_salesman_problem(cities, distances):
 
     # random order for testing purposes
     # TODO - solve the problem and find the real order
-    order_of_indices = [0] + list(range(len(cities)))[1::2] + list(
-        range(len(cities)))[2::2]
+    order_of_indices = list(range(len(cities)))
 
     return order_of_indices
