@@ -22,7 +22,6 @@ def handle_input(input, cities):
             return
         cities.append(new_city)
 def get_cities(screen, cities, font):
-    screen.fill((40, 42, 54))
     for event in pygame.event.get():
         if handle_input(event, cities) == -1:
             distances, scales = get_city_distances(cities)

@@ -35,12 +35,12 @@ def get_city_distances(cities):
 
     # dropdowns
     city1 = tk.StringVar()
-    city1.set(cities[0])
+    city1.set(0)
     drop1 = tk.OptionMenu(window, city1, *list(range(len(cities))))
     drop1.pack()
 
     city2 = tk.StringVar()
-    city2.set(cities[0])
+    city2.set(0)
     drop2 = tk.OptionMenu(window, city2, *list(range(len(cities))))
     drop2.pack()
 
