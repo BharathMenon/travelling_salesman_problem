@@ -24,5 +24,5 @@ def travelling_salesman_problem(cities, distances):
     return order_of_indices
 
 def travelling_salesman_problem_brute_force(cities, distances):
-    order_of_indices = min(permutations(range(len(cities))), key = lambda x: sum(distances[(cities[i], cities[i+1])] for i in range(-1, len(cities) - 1)))
+    order_of_indices = min(permutations(range(len(cities))), key = lambda x: sum(distances[(cities[x[i]], cities[x[i+1]])] for i in range(-1, len(cities) - 1)))
     return order_of_indices

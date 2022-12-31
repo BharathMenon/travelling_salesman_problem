@@ -11,7 +11,7 @@ def get_city_distances(cities):
         if c1 == c2: return
         scale = float(input_scale.get())
         scales[(c1, c2)] = scale
-        new_distances[(c1, c2)] = distances[(c1, c2)] * scale
+        new_distances[(c1, c2)] = distances[(c1, c2)] / scale
 
     # initial distances
     distances = {(a, b): distance_between_cities(a, b) for a in cities for b in cities if a != b}
