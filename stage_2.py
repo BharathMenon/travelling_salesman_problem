@@ -1,3 +1,5 @@
+from itertools import permutations
+
 def travelling_salesman_problem(cities, distances):
     # cities is a list
     # eg cities = [(2, 3), (4, 5)]
@@ -19,5 +21,8 @@ def travelling_salesman_problem(cities, distances):
     # random order for testing purposes
     # TODO - solve the problem and find the real order
     order_of_indices = list(range(len(cities)))
+    return order_of_indices
 
+def travelling_salesman_problem_brute_force(cities, distances):
+    order_of_indices = min(permutations(range(len(cities))), key = lambda x: sum(distances[(cities[i], cities[i+1])] for i in range(-1, len(cities) - 1)))
     return order_of_indices

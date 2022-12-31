@@ -1,13 +1,11 @@
 from stage_1 import get_cities
 from advanced_input import distance_between_cities
-from stage_2 import travelling_salesman_problem
+from stage_2 import travelling_salesman_problem, travelling_salesman_problem_brute_force
 from stage_3 import draw_animation_background, draw_salesman
 import pygame
 from math import atan, sin, cos, pi
 
 def sign(n):
-    # if n == 0:
-    #     return n
     if n < 0:
         return -1
     return 1
@@ -41,14 +39,10 @@ while True:
         distances, scales = get_cities(screen, cities, font)
         if distances != None:
             stage = 2
-        # cities = [(100, 100), (100, 200), (200, 200), (200, 100)]
-        # distances = {(a, b): distance_between_cities(a, b) for a in cities for b in cities if a != b}
-        # scales = {(a, b): 1 for a in cities for b in cities if a != b}
-        # stage = 2
 
     # solve tsp and prepare for animation
     elif stage == 2:
-        order_of_indices = travelling_salesman_problem(cities, distances)
+        order_of_indices = travelling_salesman_problem_brute_force(cities, distances)
         stage = 3
 
         # arrange cities by order of indices
@@ -64,8 +58,6 @@ while True:
         delta_y = (to_position[1] - from_position[1])
         if delta_x == 0:
             angle = sign(delta_y)*pi/2
-        elif delta_y == 0:
-            angle = 0
         else:
             angle = (atan((delta_y) / (delta_x)))
 
@@ -80,11 +72,8 @@ while True:
             from_position, to_position = to_position, cities[to_index]
             delta_x = to_position[0] - from_position[0]
             delta_y = (to_position[1] - from_position[1])
-            print(sign(delta_x), sign(delta_y), delta_y)
             if delta_x == 0:
                 angle = sign(delta_y)*pi/2
-            elif delta_y == 0:
-                angle = 0
             else:
                 angle = (atan((delta_y) / (delta_x)))
 
