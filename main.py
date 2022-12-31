@@ -6,10 +6,12 @@ from stage_3 import draw_animation_background, draw_salesman
 import pygame
 from math import atan, sin, cos
 
+
 def sign(n):
     if n < 0:
         return -1
     return 1
+
 
 """
 stage -
@@ -32,7 +34,7 @@ cities = []
 stage = 1
 
 while True:
-    
+
     screen.fill((40, 42, 54))
 
     # get distances and scales
@@ -57,15 +59,17 @@ while True:
         # values for velocity
         delta_x = to_position[0] - from_position[0]
         delta_y = to_position[1] - from_position[1]
-        angle = -(atan((delta_x) / (delta_y)))    
-    
+        angle = -(atan((delta_x) / (delta_y)))
+
     elif stage == 3:
         if draw_animation_background(screen, cities, scales) == -1:
             stage = 4
 
         # update values if salesman completes travel to city
-        if distance_between_cities(from_position, position) > distance_between_cities(from_position, to_position):
-            to_index = (to_index+1)%len(cities)
+        if distance_between_cities(from_position,
+                                   position) > distance_between_cities(
+                                       from_position, to_position):
+            to_index = (to_index + 1) % len(cities)
             position = list(to_position)
             from_position, to_position = to_position, cities[to_index]
             delta_x = to_position[0] - from_position[0]
@@ -75,9 +79,11 @@ while True:
 
         draw_salesman(screen, position)
 
-        position[0] -= sign(delta_y) * 4 * sin(angle) * scales[(from_position, to_position)]
-        position[1] += sign(delta_y) * 4 * cos(angle) * scales[(from_position, to_position)]
-    
+        position[0] -= sign(delta_y) * 4 * sin(angle) * scales[(from_position,
+                                                                to_position)]
+        position[1] += sign(delta_y) * 4 * cos(angle) * scales[(from_position,
+                                                                to_position)]
+
     else:
         # for is the last stage, just like cancer
         pygame.quit()
