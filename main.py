@@ -6,11 +6,6 @@ import pygame
 import time
 from math import atan, sin, cos, pi
 
-def sign(n):
-    if n < 0:
-        return -1
-    return 1
-
 """
 stage -
 1 -    get cities and distances
@@ -18,6 +13,11 @@ stage -
 3 -    animate salesman
 4 -    exit
 """
+
+def sign(n):
+    if n < 0:
+        return -1
+    return 1
 
 # initialize pygame
 pygame.init()
@@ -38,7 +38,7 @@ while True:
     # get distances and scales
     if stage == 1:
         distances, scales = get_cities(screen, cities, font)
-        if distances != None:
+        if len(distances) != 0:
             stage = 2
 
     # solve tsp and prepare for animation
@@ -83,8 +83,8 @@ while True:
 
         draw_salesman(screen, position)
 
-        position[0] += 4 * sign(delta_x) * cos(angle) * scales[(from_position, to_position)]
-        position[1] += 4 * sign(delta_x) * sin(angle) * scales[(from_position, to_position)]
+        position[0] += 4 * sign(delta_x) * cos(angle) * scales[to_index-1][to_index]
+        position[1] += 4 * sign(delta_x) * sin(angle) * scales[to_index-1][to_index]
 
     else:
         # for is the last stage, just like cancer
