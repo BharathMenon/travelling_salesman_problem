@@ -3,6 +3,7 @@ from advanced_input import distance_between_cities
 from stage_2 import travelling_salesman_problem, travelling_salesman_problem_brute_force, travelling_salesman_problem_branch_and_bound
 from stage_3 import draw_animation_background, draw_salesman
 import pygame
+import time
 from math import atan, sin, cos, pi
 
 def sign(n):
@@ -42,7 +43,10 @@ while True:
 
     # solve tsp and prepare for animation
     elif stage == 2:
-        order_of_indices = travelling_salesman_problem_branch_and_bound(cities, distances)
+        start = time.perf_counter()
+        order_of_indices = travelling_salesman_problem_brute_force(cities, distances)
+        end = time.perf_counter()
+        print(end-start)
         stage = 3
 
         # arrange cities by order of indices
