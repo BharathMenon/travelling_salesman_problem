@@ -1,24 +1,37 @@
+"""
+change speed for some paths
+"""
+
 import tkinter as tk
 import tkinter.messagebox as mb
 import numpy
 
-def distance_between_cities(a, b):
-    distance = ((a[0] - b[0])**2 + (a[1] - b[1])**2)**0.5
+def distance_between(from_city, to_city):
+    """
+    calculates distance between two cities
+    """
+    distance = ((from_city[0] - to_city[0])**2 + (from_city[1] - to_city[1])**2)**0.5
     return distance
 
 def get_city_distances(cities):
+    """
+    return distances and scales
+    """
     def update_speed():
-        c2 = eval(city2.get())
-        c1 = eval(city1.get())
-        if c1 == c2: return
+        """
+        read tkinter input
+        """
+        input_city_2 = int(city2.get())
+        input_city_1 = int(city1.get())
+        if input_city_1 == input_city_2:
+            return
         scale = float(input_scale.get())
-        scales[c1][c2] = scale
-        new_distances[c1][c2] = distances[c1][c2] / scale
+        scales[input_city_1][input_city_2] = scale
+        new_distances[input_city_1][input_city_2] = distances[input_city_1][input_city_2] / scale
 
     # initial distances
-    # distances = {(a, b): distance_between_cities(a, b) for a in cities for b in cities if a != b}
-    distances = numpy.array([[distance_between_cities(cities[j], cities[i]) for i in range(len(cities))] for j in range(len(cities))])
-    scales = numpy.array([[1 for i in range(len(cities))] for j in range(len(cities))])
+    distances = numpy.array([[distance_between(start, end) for start in cities] for end in cities])
+    scales = numpy.array([[1] * len(cities)] * len(cities))
     window = tk.Tk()
     window.configure(bg="#282a36")
 
@@ -42,7 +55,7 @@ def get_city_distances(cities):
     city1.set(0)
     drop1 = tk.OptionMenu(window, city1, *list(range(len(cities))))
     drop1.pack()
-    
+
     city2 = tk.StringVar()
     city2.set(0)
     drop2 = tk.OptionMenu(window, city2, *list(range(len(cities))))
