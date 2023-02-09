@@ -9,12 +9,7 @@ from tsp.stage_1 import get_cities
 from tsp.advanced_input import distance_between
 from tsp.stage_2 import tsp_brute_force
 from tsp.stage_3 import draw_animation_background, draw_salesman
-
-# stage -
-# 1 -    get cities and distances
-# 2 -    solve travelling salesman problem
-# 3 -    animate salesman
-# 4 -    exit
+from tsp.input_functions import handle_input, handle_input_city
 
 # initialize pygame
 
@@ -58,7 +53,11 @@ def move_salesman(salesman_position, delta_x, angle, scale):
 
 def run():
     """
-    run everything
+    get inputs and then run
+    1 -    get cities and distances
+    2 -    solve travelling salesman problem
+    3 -    animate salesman
+    4 -    exit
     """
 
     cities = []
@@ -127,3 +126,65 @@ def run():
             break
         pygame.display.update()
         CLOCK.tick(30)
+
+def run_interactive():
+    """
+    run while taking inputs
+    """
+
+    cities = []
+
+    while True:
+        for event in pygame.event.get():
+            if handle_input(event) == -1:
+                pygame.quit()
+                return
+            if handle_input_city(event, cities) == -1:
+                continue
+            if len(cities) == 3:
+                loop = [0, 1, 2]
+                continue
+            if len(cities) > 3:
+                new_index = len(loop)
+                # initializesalesman_positions
+                salesman_position = list(cities[0])
+                from_position, to_position = cities[:2]
+                to_index = 1
+
+                # values for velocity
+                delta_x = to_position[0] - from_position[0]
+                delta_y = (to_position[1] - from_position[1])
+                if delta_x == 0:
+                    angle = sign(delta_y)*pi/2
+                else:
+                    angle = (atan((delta_y) / (delta_x)))
+
+                def sum_of_distances(index):
+                    return  distance_between(cities[index], cities[new_index]) + \
+                            distance_between(cities[index], cities[new_index])
+
+                loop.insert(min(range(-1, len(cities)-1), key=sum_of_distances)+1, new_index)
+
+        if len(cities) < 3:
+            continue
+
+        if draw_animation_background(screen, cities) == -1:
+            pygame.quit()
+            return
+
+        # update values if salesman completes travel to city
+        if overshot(from_position,salesman_position, to_position):
+            to_index = (to_index + 1) % len(cities)
+            salesman_position = list(to_position)
+            from_position, to_position = to_position, cities[to_index]
+            delta_x = to_position[0] - from_position[0]
+            delta_y = (to_position[1] - from_position[1])
+            if delta_x == 0:
+                angle = sign(delta_y)*pi/2
+            else:
+                angle = (atan((delta_y) / (delta_x)))
+
+        draw_salesman(screen,salesman_position)
+        scale = scales[order_of_indices[to_index-1]][order_of_indices[to_index]]
+        move_salesman(salesman_position, delta_x, angle, scale)
+

@@ -4,6 +4,7 @@ get input
 import pygame
 import numpy
 from tsp.advanced_input import get_city_distances, distance_between
+from tsp.input_functions import handle_input_city, handle_input
 
 def draw_cities(screen, cities, font):
     """
@@ -14,33 +15,14 @@ def draw_cities(screen, cities, font):
         text_surface = font.render(str(index), True, (248, 248, 242))
         screen.blit(text_surface, dest=(city[0] - 3, city[1] - 15))
 
-def handle_input(keypress, cities):
-    """
-    handle input
-    """
-    if keypress.type == 256:
-        return -1
-    if keypress.type == 768:
-        if keypress.key == 27:
-            return -1
-    if keypress.type == 1025:
-        new_city = pygame.mouse.get_pos()
-        if len(cities) == 0:
-            cities.append(new_city)
-            return None
-        if min(map(lambda x: distance_between(x, new_city),
-                   cities)) <= 15:
-            return None
-        cities.append(new_city)
-    return None
-
 def get_cities(screen, cities, font):
     """
     get cities
     """
     for event in pygame.event.get():
-        if handle_input(event, cities) == -1:
+        if handle_input(event) == -1:
             distances, scales = get_city_distances(cities)
             return distances, scales
+        handle_input_city(event, cities)
     draw_cities(screen, cities, font)
     return numpy.array([]), None

@@ -2,6 +2,7 @@
 animate solution
 """
 import pygame
+from tsp.input_functions import handle_input
 
 def draw_cities(screen, cities):
     """
@@ -9,17 +10,6 @@ def draw_cities(screen, cities):
     """
     for city in cities:
         pygame.draw.circle(screen, (248, 248, 242), city, 5)
-
-def handle_input(keypress):
-    """
-    handles input
-    """
-    if keypress.type == 256:
-        return -1
-    if keypress.type == 768:
-        if keypress.key == 27:
-            return -1
-    return None
 
 def draw_path(screen, cities):
     """
