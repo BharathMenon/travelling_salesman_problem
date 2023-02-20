@@ -7,7 +7,7 @@ import pygame
 
 from tsp.stage_1 import get_cities
 from tsp.advanced_input import distance_between
-from tsp.stage_2 import tsp_brute_force
+from tsp.stage_2 import tsp_branch_and_bound
 from tsp.stage_3 import draw_animation_background, draw_salesman
 
 # stage -
@@ -78,7 +78,7 @@ def run():
         # solve tsp and prepare for animation
         elif stage == 2:
             start = time.perf_counter()
-            order_of_indices = tsp_brute_force(cities, distances)
+            order_of_indices = tsp_branch_and_bound(cities, distances)
             end = time.perf_counter()
             print(end-start)
 
