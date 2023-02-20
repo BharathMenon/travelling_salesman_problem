@@ -27,7 +27,7 @@ def tsp_branch_and_bound(cities, distances_original):
 
     path = [0]
     from_index = 0
-    
+
     # make city to itself = infinity
     distances = distances_original.copy()
     for i in range(len(cities)):
@@ -49,7 +49,7 @@ def tsp_branch_and_bound(cities, distances_original):
             cost += m
             for j in range(len(distances[i])):
                 distances[i, j] -= m
-        
+
         # cols
         for i in range(len(distances)):
             m = min(distances[:, i])
@@ -57,9 +57,9 @@ def tsp_branch_and_bound(cities, distances_original):
             cost += m
             for j in range(len(distances[:, i])):
                 distances[j, i] -= m
-        
+
         return (cost, distances)
-    
+
     while len(path) < len(cities):
         m = inf
         md = []
@@ -75,10 +75,7 @@ def tsp_branch_and_bound(cities, distances_original):
         distances = md
         path.append(mti)
         from_index = mti
-        
+
         for i in path:
             distances[from_index, i] = inf
-
-        print(distances)
-    print(path)
     return path
