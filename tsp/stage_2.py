@@ -38,8 +38,6 @@ def tsp_branch_and_bound(cities, distances_original):
         calculates cost of reduction of matrix to a given path
         """
         distances = distances.copy()
-        distances[from_index] = [inf]*len(distances)
-        distances[:, to_index] = [inf]*len(distances)
         cost = distances_original[from_index, to_index]
 
         # rows
@@ -57,6 +55,9 @@ def tsp_branch_and_bound(cities, distances_original):
             cost += m
             for j in range(len(distances[:, i])):
                 distances[j, i] -= m
+
+        distances[from_index] = [inf]*len(distances)
+        distances[:, to_index] = [inf]*len(distances)
 
         return (cost, distances)
 
