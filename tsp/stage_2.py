@@ -76,8 +76,6 @@ def tsp_branch_and_bound(cities, distances_original):
         distances = next_distance
         path.append(next_to_index)
         from_index = next_to_index
-        print(path)
-        print(distances)
 
         for i in path:
             distances[from_index, i] = inf
