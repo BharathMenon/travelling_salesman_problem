@@ -60,21 +60,23 @@ def tsp_branch_and_bound(cities, distances_original):
 
         return (cost, distances)
 
-    while len(path) < len(cities):
-        m = inf
-        md = []
+    for _ in range(1, len(cities)):
+        minimum_cost = inf
+        next_distance = []
 
         for to_index in range(len(distances)):
             if to_index in path:  continue
             cost, new_distances = cost_of_reduction(distances.copy(), from_index, to_index)
-            if cost < m:
-                m = cost
-                md = new_distances
-                mti = to_index
+            if cost < minimum_cost:
+                minimum_cost = cost
+                next_distance = new_distances
+                next_to_index = to_index
 
-        distances = md
-        path.append(mti)
-        from_index = mti
+        distances = next_distance
+        path.append(next_to_index)
+        from_index = next_to_index
+        print(path)
+        print(distances)
 
         for i in path:
             distances[from_index, i] = inf
