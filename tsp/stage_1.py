@@ -23,7 +23,7 @@ def handle_input(keypress, cities):
     if keypress.type == 768:
         if keypress.key == 27:
             return -1
-        if keypress.key == 113:
+        if keypress.key == 114:
             return 0
     if keypress.type == 1025:
         new_city = pygame.mouse.get_pos()
