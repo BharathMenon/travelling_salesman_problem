@@ -8,7 +8,7 @@ def draw_cities(screen, cities):
     draws cities
     """
     for city in cities:
-        pygame.draw.circle(screen, (248, 248, 242), city, 5)
+        pygame.draw.circle(screen, pygame.Color("#eba0ac"), city, 5)
 
 def handle_input(keypress):
     """
@@ -25,7 +25,7 @@ def draw_path(screen, cities):
     """
     draws path
     """
-    pygame.draw.lines(screen, (189, 147, 249), True, cities, 1)
+    pygame.draw.lines(screen, pygame.Color("#f5e0dc"), True, cities, 1)
 
 def draw_animation_background(screen, cities):
     """
@@ -42,4 +42,4 @@ def draw_salesman(screen, position):
     """
     draws salesman
     """
-    pygame.draw.rect(screen, (255, 121, 198), pygame.Rect(*map(lambda x: x - 5, position), 10, 10))
+    pygame.draw.rect(screen, pygame.Color("#cba6f7"), pygame.Rect(*map(lambda x: x - 7, position), 15, 15))

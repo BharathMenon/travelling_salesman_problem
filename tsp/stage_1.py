@@ -10,8 +10,8 @@ def draw_cities(screen, cities, font):
     draw cities
     """
     for index, city in enumerate(cities):
-        pygame.draw.circle(screen, (248, 248, 242), city, 5)
-        text_surface = font.render(str(index), True, (248, 248, 242))
+        pygame.draw.circle(screen, pygame.Color("#eba0ac"), city, 5)
+        text_surface = font.render(str(index), True, pygame.Color("#cdd6f4"))
         screen.blit(text_surface, dest=(city[0] - 3, city[1] - 15))
 
 def handle_input(keypress, cities):

@@ -33,7 +33,7 @@ def get_city_distances(cities):
     distances = numpy.array([[distance_between(start, end) for start in cities] for end in cities])
     scales = numpy.array([[1] * len(cities)] * len(cities))
     window = tk.Tk()
-    window.configure(bg="#282a36")
+    window.configure(bg="#313244")
 
     # exits if user does not want to change speeds
     if mb.askquestion(
@@ -46,8 +46,8 @@ def get_city_distances(cities):
     # make the window look cool
     window.geometry("500x500")
     title = tk.Label(text="ADVANCED DISTANCE SETTINGS",
-                     bg="#282a36",
-                     fg="#f8f8f2")
+                     bg="#313244",
+                     fg="#a6adc8")
     title.pack()
 
     # dropdowns
@@ -62,7 +62,7 @@ def get_city_distances(cities):
     drop2.pack()
 
     # scale
-    label = tk.Label(text="SCALE", bg="#282a36", fg="#f8f8f2")
+    label = tk.Label(text="SCALE", bg="#313244", fg="#a6adc8")
     label.pack()
     input_scale = tk.Entry()
     input_scale.pack()

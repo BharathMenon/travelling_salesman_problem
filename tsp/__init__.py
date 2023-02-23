@@ -67,7 +67,7 @@ def run():
 
     while True:
 
-        screen.fill((40, 42, 54))
+        screen.fill(pygame.Color("#1e1e2e"))
 
         # get distances and scales
         if stage == 1:
