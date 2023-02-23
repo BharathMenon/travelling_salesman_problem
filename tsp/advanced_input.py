@@ -5,6 +5,23 @@ change speed for some paths
 import tkinter as tk
 import tkinter.messagebox as mb
 import numpy
+import random
+
+def random_distance():
+    match random.randint(0, 2):
+        case 0:
+            return 1
+        case 1:
+            return random.randint(1, 20)
+        case 2:
+            return 1/random.randint(1, 5)
+
+def random_cities(cities):
+    number_of_cities = 50
+    [cities.append((random.randint(10, 490), random.randint(10, 490))) for _ in range(number_of_cities)]
+    distances = numpy.array([[distance_between(start, end) for start in cities] for end in cities])
+    scales = numpy.array([[random_distance() for _ in range(number_of_cities)] for __ in range(number_of_cities)])
+    return distances, scales
 
 def distance_between(from_city, to_city):
     """

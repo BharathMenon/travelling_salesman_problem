@@ -3,7 +3,7 @@ get input
 """
 import pygame
 import numpy
-from tsp.advanced_input import get_city_distances, distance_between
+from tsp.advanced_input import get_city_distances, distance_between, random_cities
 
 def draw_cities(screen, cities, font):
     """
@@ -23,6 +23,8 @@ def handle_input(keypress, cities):
     if keypress.type == 768:
         if keypress.key == 27:
             return -1
+        if keypress.key == 113:
+            return 0
     if keypress.type == 1025:
         new_city = pygame.mouse.get_pos()
         if len(cities) == 0:
@@ -39,8 +41,11 @@ def get_cities(screen, cities, font):
     get cities
     """
     for event in pygame.event.get():
-        if handle_input(event, cities) == -1:
+        input_code = handle_input(event, cities)
+        if input_code == -1:
             distances, scales = get_city_distances(cities)
             return distances, scales
+        if input_code == 0:
+            return random_cities(cities)
     draw_cities(screen, cities, font)
     return numpy.array([]), None
