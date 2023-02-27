@@ -42,4 +42,6 @@ def draw_salesman(screen, position):
     """
     draws salesman
     """
-    pygame.draw.rect(screen, pygame.Color("#cba6f7"), pygame.Rect(*map(lambda x: x - 7, position), 15, 15))
+    color = pygame.Color("#cba6f7")
+    rect = pygame.Rect(*map(lambda x: x - 7, position), 15, 15)
+    pygame.draw.rect(screen, color, rect)

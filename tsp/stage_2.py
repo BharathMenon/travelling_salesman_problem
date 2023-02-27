@@ -4,7 +4,6 @@ solve the tsp
 
 from itertools import permutations
 from math import inf
-from numpy import array
 
 def distance_of_path(path, distances):
     """
@@ -30,7 +29,7 @@ def tsp_branch_and_bound(cities, distances_original):
 
     # make city to itself = infinity
     distances = distances_original.copy()
-    for i in range(len(cities)):
+    for (i, _) in enumerate(cities):
         distances[i,i] = inf
 
     def cost_of_reduction(distances, from_index, to_index):
@@ -41,20 +40,22 @@ def tsp_branch_and_bound(cities, distances_original):
         cost = distances_original[from_index, to_index]
 
         # rows
-        for i in range(len(distances)):
-            m = min(distances[i])
-            if m == inf:    continue
-            cost += m
+        for (i, _) in enumerate(distances):
+            minimum = min(distances[i])
+            if minimum == inf:
+                continue
+            cost += minimum
             for j in range(len(distances[i])):
-                distances[i, j] -= m
+                distances[i, j] -= minimum
 
         # cols
         for i in range(len(distances)):
-            m = min(distances[:, i])
-            if m == inf:    continue
-            cost += m
+            minimum = min(distances[:, i])
+            if minimum == inf:
+                continue
+            cost += minimum
             for j in range(len(distances[:, i])):
-                distances[j, i] -= m
+                distances[j, i] -= minimum
 
         distances[from_index] = [inf]*len(distances)
         distances[:, to_index] = [inf]*len(distances)
@@ -66,7 +67,8 @@ def tsp_branch_and_bound(cities, distances_original):
         next_distance = []
 
         for to_index in range(len(distances)):
-            if to_index in path:  continue
+            if to_index in path:
+                continue
             cost, new_distances = cost_of_reduction(distances.copy(), from_index, to_index)
             if cost < minimum_cost:
                 minimum_cost = cost
