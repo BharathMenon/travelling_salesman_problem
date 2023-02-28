@@ -1,0 +1,176 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LOOK AT THIS WEBSITE                                                                          %
+% LEARN IT AND MAKE THE FLOWCHART I WILL NOT                                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% https://latexdraw.com/draw-flowcharts-latex-tutorial/                                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows.meta, positioning}
+
+\title{Travelling Salesman Problem}
+\author{Tanmay Deshpande}
+\date{February 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+The travelling salesman problem asks the following question:
+"Given a list of cities and the distances between each pair of cities,
+what is the shortest possible route that visits each city exactly once
+and returns to the origin city?"
+The objective of this project is to find the shortest possible path
+among a set of given points (along with their coordinates) that
+traverses every single point exactly once, and then returns back to the
+starting point, thus attempting to solve the travelling salesman
+problem.
+This is done with the help of an algorithm, used to find the optimal
+path. The algorithm is explained hand-in-hand with a live example as
+that will be much easier to understand.
+
+\section{Working of the Algorithm}
+\begin{enumerate}
+
+    \item We assume that n distinct points are fed by the user to the
+algorithm, along with their coordinates.
+
+    \item Then, we create an nXn matrix which contains the
+distances from each point to every other point as the
+elements. (As in, the element M [a, b], where M is the
+matrix, contains the distance of a from b.) Note that
+distance from one point to itself is considered as infinity,
+hence an entry of M [i, i] is considered infinity for all i in
+n. A set of values in the example case has been taken and
+formed into a matrix as shown here
+
+$$
+\left[ {\begin{array}{ccccc}
+     \infty & 20 & 30 & 10 & 11\\
+     15 & \infty & 16 & 4 & 2\\
+     3 & 5 & \infty & 2 & 4\\
+     19 & 6 & 18 & \infty & 3\\
+     16 & 4 & 7 & 16 & \infty\\
+\end{array} }
+\right]
+$$
+
+    \item Now, we “reduce” this matrix. This is done by finding the
+minimum element from across each row and subtracting
+them from each of the elements in the corresponding row.
+Then we repeat this for every column. The sum of all the
+removed elements is called the reduced cost. The
+resultant matrix achieved is the first reduced matrix. It
+shall be referred to as C. The reduced cost as calculated is 25. The reduced matrix has been
+shown here
+
+$$
+\left[ {\begin{array}{ccccc}
+     \infty & 10 & 17 & 0 & 1\\
+     12 & \infty & 11 & 2 & 0\\
+     0 & 3 & \infty & 0 & 2\\
+     15 & 3 & 12 & \infty & 0\\
+     11 & 0 & 0 & 12 & \infty\\
+\end{array} }
+\right]
+$$
+
+    \item Now, it is assumed that the path starts from one point. In
+this case, we consider point 1 to be the starting point
+(With regards to length of path, starting point won’t
+matter).
+
+    \item First, consider the path $1 \rightarrow 2$. Now, to find the cost of
+node (or point) 2, we need to reduce the first reduced
+matrix in a particular way:
+
+    \begin{enumerate}
+
+        \item First, make all the elements in the row of the
+starting point and the column of the ending
+point as infinity. So, all the elements in the row
+1 and column 2 are made infinity.
+
+        \item Then, as once we come from a point to another,
+it can’t go back, the element of the order
+(from\_point, to\_point) must also be set to
+infinity. In this case, C (1,2) is set to infinity.
+
+        \item The reduced matrix for path $1 \rightarrow 2$ is given here
+
+        $$
+        \left[ {\begin{array}{ccccc}
+             \infty & \infty & \infty & \infty & \infty\\
+             12 & \infty & 11 & 2 & 0\\
+             0 & \infty & \infty & 0 & 2\\
+             15 & \infty & 12 & \infty & 0\\
+             11 & \infty & 0 & 12 & \infty\\
+        \end{array} }
+        \right]
+        $$
+
+
+        \item Finally, the reduced cost for this node shall be
+calculated according to the formula:
+        $$M[ from\_node, to\_node] + r$$
+where r is the
+reduced cost of the current matrix.
+So, reduced cost for node 2 in this example is:
+10 + 0 = 10.
+
+    \end{enumerate}
+
+    \item Similarly, the reduced matrix and the corresponding
+cost of reduction is found for all the points from the
+first node. In our example, the reduced costs for node
+3,4 and 5 are 27, 0 and 6 respectively.
+
+    \item Then, the node with least cost of reduction is found,
+and that is assumed to be the next node in the optimal
+path. Hence, in our example, the point 4 will be next
+node.
+
+    \item Now, from the next node, the possible paths are further
+extended to possible points. Then, just like in the
+previous case, reduced matrixes are taken cost of
+reductions are found.
+    \begin{enumerate}
+        \item From node 4, the path can go to nodes 2 or 3.
+This matrix is then reduced, in similar manner
+as the previous case. The cost of reduction here
+is C (from\_node, to\_node) + r, where r is the
+cost of reduction of to\_node.
+        \item For the path $4 \rightarrow 2$, The elements of the 4th
+row and the 2nd column are turned to infinity.
+The elements C(2,1) and C(2,4) are also turned
+to infinity. Then, the cost of reduction is found.
+The cost of reduction of node 4 to node 2,3 and
+5 happens to be 3, 25 and 11 respectively.
+    \end{enumerate}
+
+    \item Again, the node with the least cost of reduction is
+chosen as the next point in the path. Hence, the path
+now becomes: $1 \rightarrow 4 \rightarrow 2$.
+    \item Next, the similar method is followed to find the next
+node (from 3 and 5), by reducing the matrix and hence
+finding the cost of reduction for the remaining points.
+    \item So, the cost of reduction for node 3 and 5 respectively.
+    \item Hence, the next node would then be 5 and the node
+after that automatically becomes 3.
+    \item The path eventually returns to where it started, so it
+returns to 1.
+
+\end{enumerate}
+
+\section{Conclusion}
+Hence, the most optimal path according to our
+algorithm is:
+$1 \rightarrow 4 \rightarrow 2 \rightarrow 5 \rightarrow 3 \rightarrow 1$.
+In this way, the algorithm is able to provide the
+optimal path for n number of inputted points
+
+\end{document}
